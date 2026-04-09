@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>問題規格書｜美甲品牌重定位</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #E8E6E1;
+    font-family: 'Noto Sans TC', sans-serif;
+    color: #1A1A1A;
+    line-height: 1.7;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+  #capture {
+    width: 794px;
+    min-height: 1123px;
+    background: #F7F6F3;
+    padding: 48px 52px 60px;
+    position: relative;
+  }
+  .download-btn {
+    position: fixed; top: 20px; right: 20px;
+    background: #6B5CE7; color: #fff; border: none; border-radius: 10px;
+    padding: 10px 22px; font-family: 'Noto Sans TC', sans-serif;
+    font-size: 14px; font-weight: 700; cursor: pointer;
+    display: flex; align-items: center; gap: 6px;
+    box-shadow: 0 4px 16px rgba(107,92,231,.35);
+    transition: transform .15s, box-shadow .15s; z-index: 9999;
+  }
+  .download-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(107,92,231,.45); }
+  .download-btn .material-icons-outlined { font-size: 18px; }
+
+  .header { margin-bottom: 36px; }
+  .header-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #EEEBFF; color: #6B5CE7;
+    font-size: 13px; font-weight: 700; padding: 5px 14px;
+    border-radius: 20px; margin-bottom: 12px;
+  }
+  .header-badge .material-icons-outlined { font-size: 16px; }
+  .header-title {
+    font-size: 30px; font-weight: 900; color: #1A1A1A;
+    letter-spacing: -.5px; margin-bottom: 16px; line-height: 1.35;
+  }
+  .header-meta { display: flex; gap: 24px; flex-wrap: wrap; }
+  .meta-item { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #888; }
+  .meta-item .material-icons-outlined { font-size: 16px; color: #AAA; }
+  .meta-value { font-weight: 700; color: #444; }
+  .header-divider { margin-top: 20px; border: none; border-top: 2px solid #E0DCD6; }
+
+  .section { margin-bottom: 32px; }
+  .section-head { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+  .section-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .section-icon .material-icons-outlined { font-size: 22px; }
+  .section-label { display: flex; flex-direction: column; }
+  .section-num { font-size: 12px; color: #AAA; font-weight: 500; line-height: 1.2; }
+  .section-title { font-size: 20px; font-weight: 900; color: #1A1A1A; line-height: 1.3; }
+
+  .content-box {
+    background: #fff; border: 1px solid #E0DCD6;
+    border-radius: 12px; padding: 20px;
+  }
+  .item-row {
+    display: flex; gap: 12px; padding: 14px 0;
+    border-bottom: 1px solid #F0EEE9; align-items: flex-start;
+  }
+  .item-row:last-child { border-bottom: none; }
+  .item-row:first-child { padding-top: 0; }
+  .item-label { font-size: 13px; font-weight: 700; color: #888; min-width: 64px; flex-shrink: 0; padding-top: 2px; }
+  .item-text { font-size: 15px; color: #333; line-height: 1.7; flex: 1; }
+  .item-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; border-radius: 50%;
+    background: #F0EEE9; font-size: 12px; font-weight: 700; color: #888;
+    flex-shrink: 0; margin-top: 2px;
+  }
+  .priority-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 12px; font-weight: 700; padding: 3px 10px;
+    border-radius: 6px; flex-shrink: 0; margin-top: 1px;
+  }
+  .priority-p1 { background: #FFE0EC; color: #D63384; }
+  .priority-p2 { background: #FFF3D6; color: #D4900A; }
+  .item-id {
+    font-size: 12px; font-weight: 700; color: #AAA;
+    background: #F5F5F5; padding: 2px 8px; border-radius: 4px;
+    flex-shrink: 0; margin-top: 2px;
+  }
+  .sub-field { font-size: 13px; color: #666; margin-top: 6px; padding-left: 4px; line-height: 1.6; }
+  .sub-field strong { color: #888; font-weight: 700; }
+
+  /* Insight box */
+  .insight-box {
+    background: linear-gradient(135deg, #EEEBFF 0%, #F0F9FF 100%);
+    border: 1.5px solid #C4B8FF;
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+  }
+  .insight-label {
+    font-size: 11px; font-weight: 700; color: #6B5CE7;
+    text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;
+  }
+  .insight-text { font-size: 15px; color: #2D2060; font-weight: 700; line-height: 1.6; }
+
+  .devil-note {
+    background: #FFF3D6; border-left: 3px solid #D4900A;
+    padding: 10px 14px; border-radius: 0 8px 8px 0;
+    font-size: 13px; color: #7A5500; margin-top: 10px; line-height: 1.6;
+  }
+  .devil-note strong { color: #D4900A; }
+
+  /* Innovation cards */
+  .innovation-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  }
+  .innovation-card {
+    background: #F7F6F3; border: 1px solid #E0DCD6;
+    border-radius: 10px; padding: 14px 16px;
+  }
+  .innovation-card.starred {
+    background: #EEEBFF; border-color: #C4B8FF;
+  }
+  .card-tag {
+    font-size: 11px; font-weight: 700; color: #6B5CE7;
+    text-transform: uppercase; letter-spacing: .8px; margin-bottom: 6px;
+  }
+  .card-tag.orange { color: #D4900A; }
+  .card-title { font-size: 14px; font-weight: 700; color: #1A1A1A; margin-bottom: 4px; }
+  .card-desc { font-size: 13px; color: #555; line-height: 1.6; }
+
+  .compare-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .compare-table th {
+    text-align: left; font-size: 12px; font-weight: 700; color: #AAA;
+    padding: 10px 12px; border-bottom: 2px solid #E0DCD6; white-space: nowrap;
+  }
+  .compare-table td { padding: 12px; border-bottom: 1px solid #F0EEE9; color: #333; vertical-align: top; }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table .recommend { background: #EEEBFF; }
+  .compare-table .recommend td { color: #6B5CE7; font-weight: 700; border-bottom-color: #DDD8FF; }
+  .compare-table .recommend td:first-child::before { content: '★ '; }
+
+  .timeline { position: relative; padding-left: 36px; }
+  .timeline::before {
+    content: ''; position: absolute; left: 13px; top: 8px; bottom: 8px;
+    width: 2px; background: #E0DCD6;
+  }
+  .timeline-item { position: relative; padding: 0 0 24px 0; }
+  .timeline-item:last-child { padding-bottom: 0; }
+  .timeline-dot {
+    position: absolute; left: -36px; top: 0;
+    width: 28px; height: 28px; border-radius: 50%;
+    background: #6B5CE7; color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700;
+  }
+  .timeline-title { font-size: 15px; font-weight: 700; color: #1A1A1A; margin-bottom: 4px; }
+  .timeline-desc { font-size: 14px; color: #666; line-height: 1.6; }
+
+  .exclusion-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 0; border-bottom: 1px solid #F0EEE9;
+    font-size: 14px; color: #888;
+  }
+  .exclusion-item:last-child { border-bottom: none; }
+
+  .sub-block { margin-bottom: 16px; }
+  .sub-block-title {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 13px; font-weight: 700; color: #888;
+    margin-bottom: 10px; text-transform: uppercase; letter-spacing: .5px;
+  }
+  .risk-item { display: flex; align-items: flex-start; gap: 8px; font-size: 14px; color: #444; padding: 6px 0; }
+</style>
+</head>
+<body>
+
+<button class="download-btn" onclick="downloadPNG()">
+  <span class="material-icons-outlined">download</span> 下載 PNG
+</button>
+
+<div id="capture">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-badge">
+      <span class="material-icons-outlined">auto_fix_high</span>
+      問題規格書 · rightproblem-coach v2.1（修訂版）
+    </div>
+    <div class="header-title">美甲品牌重定位：<br>用「暈染美學」脫離低價競爭，建立自己的客群</div>
+    <div class="header-meta">
+      <div class="meta-item">
+        <span class="material-icons-outlined">calendar_today</span>
+        日期：<span class="meta-value">2026-04-09</span>
+      </div>
+      <div class="meta-item">
+        <span class="material-icons-outlined">timer</span>
+        窗口：<span class="meta-value">2 個月內完成品牌佈局，開幕即 2.0</span>
+      </div>
+      <div class="meta-item">
+        <span class="material-icons-outlined">store</span>
+        情境：<span class="meta-value">主動換地點，藉機品牌升級</span>
+      </div>
+    </div>
+    <hr class="header-divider">
+  </div>
+
+  <!-- 01 問題定義 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon" style="background:#EEEBFF;">
+        <span class="material-icons-outlined" style="color:#6B5CE7;">search</span>
+      </div>
+      <div class="section-label">
+        <span class="section-num">SECTION 01</span>
+        <span class="section-title">問題定義</span>
+      </div>
+    </div>
+    <div class="content-box">
+      <div class="insight-box">
+        <div class="insight-label">🎯 重構後的真正問題</div>
+        <div class="insight-text">夥伴的創作風格（暈染）與現有客群期待（可愛、年輕）之間存在根本矛盾——導致 IG 無法聚焦、作品集無法累積、品牌無法定義。換地點是契機，但真正要解的是：如何讓「我想做的風格」被「願意為它付錢的人」找到。</div>
+      </div>
+      <div class="item-row">
+        <span class="item-label">症狀</span>
+        <span class="item-text">IG 作品風格混雜、暈染作品數量不足以支撐穩定更新、回客率 30%、不知如何定價</span>
+      </div>
+      <div class="item-row">
+        <span class="item-label">根本問題</span>
+        <span class="item-text" style="font-weight:700;color:#6B5CE7;">「服務誰」的問題尚未解決——現有客群（大學生、可愛風）不是目標客群，但目標客群（喜愛暈染美學的人）尚未建立連結</span>
+      </div>
+      <div class="item-row">
+        <span class="item-label">5 Whys</span>
+        <span class="item-text">
+          W1：為什麼 IG 無法支撐穩定更新？→ 暈染作品素材太少<br>
+          W2：為什麼暈染作品少？→ 現有客人多要求可愛風，無法累積暈染作品<br>
+          W3：為什麼接到可愛風客人？→ 舊地點在大學旁，自然吸引學生族群<br>
+          W4：為什麼沒有篩選客群？→ 品牌從未對外清楚傳遞「我的風格是暈染」<br>
+          W5：為什麼沒傳遞清楚？→ 還在「接任何客人求生存」的模式，未進入「吸引對的人」的模式
+        </span>
+      </div>
+      <div class="devil-note">
+        <strong>🔥 魔鬼代言人：</strong>回客率 30% 未必是壞事——如果現有的 70% 流失者本來就不是目標客群，那留住他們反而是浪費成本。真正的問題不是「提高回客率」，而是「先找到對的客人」。
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 目標 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon" style="background:#D6FFE8;">
+        <span class="material-icons-outlined" style="color:#0A8A4A;">flag</span>
+      </div>
+      <div class="section-label">
+        <span class="section-num">SECTION 02</span>
+        <span class="section-title">目標</span>
+      </div>
+    </div>
+    <div class="content-box">
+      <div class="item-row">
+        <span class="priority-badge priority-p1">P1</span>
+        <span class="item-text" style="display:flex;align-items:flex-start;gap:6px;">
+          <span style="color:#D63384;font-size:15px;flex-shrink:0;">★</span>
+          <span>開幕前確立品牌定位：能用 1 句話說清楚「我的風格（暈染）、我服務誰（喜愛細緻藝術感的成熟客群）、我與大眾美甲的差異」，並一致體現在 IG bio、作品集策展、定價結構中</span>
+        </span>
+      </div>
+      <div class="item-row">
+        <span class="priority-badge priority-p1">P1</span>
+        <span class="item-text" style="display:flex;align-items:flex-start;gap:6px;">
+          <span style="color:#D63384;font-size:15px;flex-shrink:0;">★</span>
+          <span>建立「暈染作品素材庫」：開幕前累積 ≥ 20 件暈染相關作品（含模特手、自己練習作品、過程影片），使每週 IG 更新不再受限於客人需求</span>
+        </span>
+      </div>
+      <div class="item-row">
+        <span class="priority-badge priority-p1">P1</span>
+        <span class="item-text" style="display:flex;align-items:flex-start;gap:6px;">
+          <span style="color:#D63384;font-size:15px;flex-shrink:0;">★</span>
+          <span>建立脫離低價競爭的訂價結構：依工時與技術難度分 3 層，最低層定價 ≥ 市場均價 × 1.3，且能以品牌定位與技術深度支撐定價合理性</span>
+        </span>
+      </div>
+      <div class="item-row">
+        <span class="priority-badge priority-p2">P2</span>
+        <span class="item-text" style="display:flex;align-items:flex-start;gap:6px;">
+          <span style="color:#0A8A4A;font-size:15px;flex-shrink:0;">✅</span>
+          <span>開幕後 3 個月內，回客率從 30% 提升至 ≥ 50%——但此目標的前提是新客群已是目標客群，否則數字無意義</span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 限制條件 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon" style="background:#FFE0EC;">
+        <span class="material-icons-outlined" style="color:#D63384;">block</span>
+      </div>
+      <div class="section-label">
+        <span class="section-num">SECTION 03</span>
+        <span class="section-title">限制條件（100x 資源仍無法改變）</span>
+      </div>
+    </div>
+    <div class="content-box">
+      <div class="item-row">
+        <span class="item-id">CN-01</span>
+        <span style="color:#D63384;flex-shrink:0;margin-top:3px;">🚫</span>
+        <span class="item-text">每日最多服務 2 位客人（物理上限）——這不是問題，這是定價必須往高走的根本理由：2 人 × 高客單 > 5 人 × 低客單，且品質更穩定</span>
+      </div>
+      <div class="item-row">
+        <span class="item-id">CN-02</span>
+        <span style="color:#D63384;flex-shrink:0;margin-top:3px;">🚫</span>
+        <span class="item-text">搬遷時間固定（2 個月後）——舊客群（大學生可愛風）無法在此期間被「教育」成暈染客群，只能在新地點重新吸引對的人</span>
+      </div>
+      <div class="item-row">
+        <span class="item-id">CN-03</span>
+        <span style="color:#D63384;flex-shrink:0;margin-top:3px;">🚫</span>
+        <span class="item-text">目前暈染作品數量不足——無法靠現有素材在短期內大量更新 IG，需主動創造素材（練習作品、模特邀約）</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 04 障礙 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon" style="background:#D6F0FF;">
+        <span class="material-icons-outlined" style="color:#0D7FBF;">construction</span>
+      </div>
+      <div class="section-label">
+        <span class="section-num">SECTION 04</span>
+        <span class="section-title">障礙（可克服）</span>
+      </div>
+    </div>
+    <div class="content-box">
+      <div class="item-row" style="flex-direction:column;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="item-id">OB-01</span>
+          <span style="color:#0D7FBF;">→</span>
+          <span class="item-text" style="font-weight:700;">IG 作品集呈現混亂——暈染與可愛風混雜，無法傳遞清晰的品牌信號</span>
+        </div>
+        <div class="sub-field">
+          <strong>根因：</strong>被動接受客人需求，而非主動策展作品集方向<br>
+          <strong>影響：</strong>IG 無法吸引目標客群，演算法也難以為帳號定向推送
+        </div>
+      </div>
+      <div class="item-row" style="flex-direction:column;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="item-id">OB-02</span>
+          <span style="color:#0D7FBF;">→</span>
+          <span class="item-text" style="font-weight:700;">沒有足夠的暈染素材支撐內容創作——導致退而求其次發不符風格的作品</span>
+        </div>
+        <div class="sub-field">
+          <strong>根因：</strong>尚未建立「主動創造素材」的習慣（等客人委託才有作品）<br>
+          <strong>影響：</strong>作品集與目標定位脫節，形成惡性循環
+        </div>
+      </div>
+      <div class="item-row" style="flex-direction:column;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="item-id">OB-03</span>
+          <span style="color:#0D7FBF;">→</span>
+          <span class="item-text" style="font-weight:700;">定價缺乏支撐框架——不知如何向客人解釋「為什麼比別人貴」</span>
+        </div>
+        <div class="sub-field">
+          <strong>根因：</strong>品牌定位未確立，所以定價沒有故事可說<br>
+          <strong>影響：</strong>只能跟市場比價，永遠困在低價競爭
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 05 成功標準 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon" style="background:#D6FFE8;">
+        <span class="material-icons-outlined" style="color:#0A8A4A;">verified</span>
+      </div>
+      <div class="section-label">
+        <span class="section-num">SECTION 05</span>
+        <span class="section-title">成功標準（可量測）</span>
+      </div>
+    </div>
+    <div class="content-box">
+      <div class="item-row">
+        <span class="item-num">1</span>
+        <span class="item-text">搬遷開幕日：IG 連續最新 9 宮格全為暈染相關作品，且 bio 呈現品牌定位語（不使用「可愛」「活潑」等描述）</span>
+      </div>
+      <div class="item-row">
+        <span class="item-num">2</span>
+        <span class="item-text">開幕前 2 週：完成暈染素材庫 ≥ 20 件，其中含 ≥ 5 支過程 / 教學類影片素材（可用於 Reels）</span>
+      </div>
+      <div class="item-row">
+        <span class="item-num">3</span>
+        <span class="item-text">開幕前：訂價表完成，最低層定價 ≥ 舊定價 × 1.3，且每項服務均附有技術說明（解釋為何值這個價）</span>
+      </div>
+      <div class="item-row">
+        <span class="item-num">4</span>
+        <span class="item-text">開幕後第 2 個月底：當月新預約客人中，≥ 60% 是因為「暈染風格」主動找上門（而非口耳相傳或舊客帶來）</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 06 創新方案：脫離低價競爭 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon" style="background:#EEEBFF;">
+        <span class="material-icons-outlined" style="color:#6B5CE7;">lightbulb</span>
+      </div>
+      <div class="section-label">
+        <span class="section-num">SECTION 06</span>
+        <span class="section-title">創新方案：如何脫離低價競爭？</span>
+      </div>
+    </div>
+    <div class="content-box">
+      <div style="margin-bottom:14px;font-size:13px;color:#888;">低價競爭的本質是「無差異化」——客人沒辦法說出「為什麼選你而不選別人」。以下 4 個方向可創造真正的差異：</div>
+      <div class="innovation-grid">
+        <div class="innovation-card starred">
+          <div class="card-tag">★ 優先推薦</div>
+          <div class="card-title">成為「暈染美甲」的品類代名詞</div>
+          <div class="card-desc">不是「美甲師之一」，而是「那個專做暈染的人」。在 IG bio、標籤、自我介紹中統一植入「暈染」標籤。當有人搜尋暈染美甲時，你是第一個出現的名字。</div>
+        </div>
+        <div class="innovation-card starred">
+          <div class="card-tag">★ 優先推薦</div>
+          <div class="card-title">限量預約制 × 等待名單</div>
+          <div class="card-desc">每天 2 人上限不是缺點，是稀缺性的武器。「本月僅剩 3 個時段」比「歡迎預約」更有吸引力。等待名單製造心理價值，也篩選出真正重視品質的客人。</div>
+        </div>
+        <div class="innovation-card">
+          <div class="card-tag orange">輔助方向</div>
+          <div class="card-title">作品即教學：過程透明化</div>
+          <div class="card-desc">發佈暈染技法的過程影片（不用教完整，展示難度即可）。讓客人看見「暈染比一般美甲複雜 3 倍」，自然理解為何定價更高。技術透明是最好的漲價理由。</div>
+        </div>
+        <div class="innovation-card">
+          <div class="card-tag orange">輔助方向</div>
+          <div class="card-title">客製化諮詢作為服務差異</div>
+          <div class="card-desc">大眾美甲是「你選款式我來做」，你的服務是「根據你的膚色、手型、場合，我為你設計」。諮詢環節本身就是服務的一部分，也是溢價的理由。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 07 實施計劃 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon" style="background:#D6FFE8;">
+        <span class="material-icons-outlined" style="color:#0A8A4A;">rocket_launch</span>
+      </div>
+      <div class="section-label">
+        <span class="section-num">SECTION 07</span>
+        <span class="section-title">實施計劃（搬遷前 2 個月）</span>
+      </div>
+    </div>
+    <div class="content-box">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot">1</div>
+          <div>
+            <div class="timeline-title">第 1 週｜品牌定位語 + 作品策展方向</div>
+            <div class="timeline-desc">完成 1 句品牌定位語（格式：「我為＿＿＿提供＿＿＿風格的美甲，讓她們＿＿＿」）。審視現有 IG，決定哪些貼文保留、哪些封存（不刪，避免影響帳號）。鎖定未來 2 個月的作品集主色調與視覺風格。</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">2</div>
+          <div>
+            <div class="timeline-title">第 2-4 週｜主動創造暈染素材庫</div>
+            <div class="timeline-desc">邀請 3-5 位朋友或模特擔任「練習手」，累積暈染作品，同時錄製過程影片。目標：每週產出 4-6 件暈染素材。不要等客人委託才有作品——你是策展人，不是等訂單的工廠。</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">3</div>
+          <div>
+            <div class="timeline-title">第 5-6 週｜訂價重建 + IG 帳號重整</div>
+            <div class="timeline-desc">計算工時成本後建立 3 層訂價（基礎暈染 / 複雜設計 / 完全客製）。更新 IG bio、highlight 封面、作品集排版。開始發佈 Reels（過程影片優先），並在每篇貼文加入「暈染」相關標籤組合。</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot">4</div>
+          <div>
+            <div class="timeline-title">搬遷開幕日｜限量開幕預約 + 品牌首發</div>
+            <div class="timeline-desc">宣告「新地點開幕，首月僅開放 20 個預約時段」（限量製造稀缺）。發佈開幕 Reels（品牌故事 / 工作室空間 / 代表作品）。對舊客中喜愛暈染風格的人發送個別邀請；其他舊客不主動聯繫，讓 IG 自然篩選。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 08 排除範圍 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon" style="background:#F5F5F5;">
+        <span class="material-icons-outlined" style="color:#666;">do_not_disturb</span>
+      </div>
+      <div class="section-label">
+        <span class="section-num">SECTION 08</span>
+        <span class="section-title">排除範圍（此階段不處理）</span>
+      </div>
+    </div>
+    <div class="content-box">
+      <div class="exclusion-item">
+        <span>⛔</span>
+        <span>不試圖把現有可愛風舊客「說服」成暈染愛好者——品味偏好無法短期改變，資源應投入吸引新的對的人</span>
+      </div>
+      <div class="exclusion-item">
+        <span>⛔</span>
+        <span>不在品牌定位確立前投放付費廣告——定位不清的廣告只是把更多不對的人帶進來</span>
+      </div>
+      <div class="exclusion-item">
+        <span>⛔</span>
+        <span>不追求「提高回客率」作為首要指標——在新客群尚未建立前，舊的回客率數字對新階段沒有參考意義</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 09 風險與假設 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon" style="background:#FFF3D6;">
+        <span class="material-icons-outlined" style="color:#D4900A;">warning</span>
+      </div>
+      <div class="section-label">
+        <span class="section-num">SECTION 09</span>
+        <span class="section-title">風險與假設</span>
+      </div>
+    </div>
+    <div class="content-box">
+      <div class="sub-block">
+        <div class="sub-block-title">⚠️ 隱含假設</div>
+        <div class="risk-item">
+          <span style="color:#D4900A;flex-shrink:0;">⚠️</span>
+          <span>假設新地點地理位置能接觸到喜愛暈染美學的客群——若新地點仍在學生區，品牌重定位的效果可能有限，需確認新地點的商圈屬性</span>
+        </div>
+        <div class="risk-item">
+          <span style="color:#D4900A;flex-shrink:0;">⚠️</span>
+          <span>假設 IG 是主要客源入口——若目標客群不在 IG 而在其他平台（小紅書、Pinterest、LINE 社群），則 IG 優先的策略需要調整</span>
+        </div>
+      </div>
+      <div class="sub-block" style="border-top:1px solid #F0EEE9;padding-top:16px;">
+        <div class="sub-block-title">⚠️ 風險</div>
+        <div class="risk-item">
+          <span style="color:#D63384;flex-shrink:0;">⚠️</span>
+          <span>換地點後有 1-2 個月的收入空窗期——舊客流失 + 新客未建立之間的缺口，建議在搬遷前 4 週開始預熱，讓部分新客在開幕前就已預約</span>
+        </div>
+        <div class="risk-item">
+          <span style="color:#D63384;flex-shrink:0;">⚠️</span>
+          <span>過度聚焦暈染可能縮小客群範圍——若 2 個月後新客流量仍不足，需評估是否保留 20% 的彈性接受非暈染委託，以維持基本收入</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function downloadPNG() {
+  const btn = document.querySelector('.download-btn');
+  btn.style.display = 'none';
+  html2canvas(document.getElementById('capture'), {
+    scale: 2, useCORS: true, backgroundColor: '#F7F6F3'
+  }).then(function(canvas) {
+    const link = document.createElement('a');
+    link.download = '問題規格書_美甲品牌重定位.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    btn.style.display = 'block';
+  }).catch(function() { btn.style.display = 'block'; });
+}
+</script>
+</body>
+</html>
